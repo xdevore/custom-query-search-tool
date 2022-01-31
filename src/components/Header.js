@@ -2,7 +2,7 @@ import logo from './delaget image.png'
 
 const Header = () => {
   return (
-    <header className='Header'>
+    <header>
       <img className="App-logo" src={logo} alt="logo" />
     </header>
   )

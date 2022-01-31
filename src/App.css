@@ -4,39 +4,38 @@
   width:100%;
   background-color:aliceblue;
   min-height:100%;
+  display: block;
+  justify-content: center;
 }
 
 .App-logo {
   height: 20vmin;
-  pointer-events: none;
-  float: left;
+  display: flex;
   margin: -30px -30px 0px 0px;
 }
 
-.Container {
-  top: 40px;
-  width: 70%;
+.Grid {
+  top: 100px;
 }
 
-.Grid {
-  position:absolute;
-  top:130px;
-  margin-top: 0px;
-  margin-bottom: 0px;
+.Grid-second-row{
+  width: 50% !important;
+  margin: auto !important;
 }
 
 .Header {
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 100px;
+  position: absolute;
 }
 
 .Segment {
-  display: flex;
   justify-content: center;
+  width: 50%;
+  padding: 1000px;
 }
 
 .Time-segment {
   display: inline-block;
   justify-content: center;
-  width: 50%;
 }
