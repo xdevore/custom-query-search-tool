@@ -31,6 +31,7 @@ function CustomQuerySearchTool() {
     };
 
     console.log(requestData);
+    postData("https://customsearchquerytoolapi.azurewebsites.net/Search/Test", requestData)
   }
 
     // use map to set up metric definitions
@@ -49,7 +50,17 @@ function CustomQuerySearchTool() {
     })
 
     return response.json()
-}
+  }
+
+  async function postData(url = "", request){
+    const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(request),
+    })
+
+    return response.json()
+  }
 
 
   useEffect(() =>{
@@ -63,11 +74,19 @@ function CustomQuerySearchTool() {
         })
   },  []);
 
-  function updateMetricCriteria(newValue, index, fieldName) => {
-    // copy array first
-    // modify stuff in the array
-    // use setter to update metricCriteria
-    // metricCriteria[index][fieldName]
+  function updateMetricCriteria(newValue, index, fieldName) {
+    const newMetricCriteria = [];
+    for (var i = 0; i < metricCriteria.length; i++){
+      if (i === index) {
+        var updatedValue = metricCriteria[i][fieldName];
+        updatedValue = newValue;
+        newMetricCriteria.push(updatedValue)
+      }
+      else {
+        newMetricCriteria.push(metricCriteria[i])
+      }
+    }
+    setMetricCriteria(newMetricCriteria)
   }
 
   return (
@@ -146,15 +165,22 @@ function CustomQuerySearchTool() {
                               selection
                               placeholder="Select Compare Type"
                               value={c.compareType}
-                              onChange={(event, data) => setCompareType(data.value)}
+                              onChange={(event, data) => updateMetricCriteria(data.value, index, "compareType")}
                             >
                             </Dropdown>
                             <Input
                               placeholder="Enter Comparison Value"
                               value={c.value}
-                              onChange={(event, data) => setCompareValue(data.value)}
+                              onChange={(event, data) => updateMetricCriteria(data.value, index, "value")}
                             >
                             </Input>
+                            <Button type="button" onClick={(event, data) => {
+                              const newMetricCriteria = [];
+                              for (var i = 0; i < metricCriteria.length - 1; i++){
+                                  newMetricCriteria.push(metricCriteria[i])
+                              }
+                              setMetricCriteria(newMetricCriteria)
+                            }}>Delete Criteria</Button>
                       </Form.Field>)
                     })}
                   <Form.Field>
